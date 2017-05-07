@@ -39,6 +39,9 @@ public class Silla
 	@JsonProperty(value="devolucion")
 	private int devolucion;
 
+	@JsonProperty(value="asistio")
+	private int asistio;
+	
 	@JsonProperty(value="fechaRealizacion")
 	private Date fechaRealizacion;
 
@@ -57,14 +60,16 @@ public class Silla
 	 */
 	public Silla(@JsonProperty(value="userId")int userId, @JsonProperty(value="idSilla")int idSilla,
 			@JsonProperty(value="precio") int precio, @JsonProperty(value="devolucion") int devolucion, 
-			@JsonProperty(value="disponible") int disponible, @JsonProperty(value="fechaRealizacion") Date 
-			fechaRealizacion, @JsonProperty(value="funcionId") int funcionId, @JsonProperty(value="localidadId") int localidadId) 
+			@JsonProperty(value="disponible") int disponible,@JsonProperty(value="asistio")int asistio,
+			@JsonProperty(value="fechaRealizacion") Date fechaRealizacion, @JsonProperty(value="funcionId") int funcionId, 
+			@JsonProperty(value="localidadId") int localidadId) 
 	{
 		super();
 		this.userId = userId;
 		this.idSilla = idSilla;
 		this.precio = precio;
 		this.disponible = disponible;
+		this.asistio = asistio;
 		this.fechaRealizacion = fechaRealizacion;
 		this.devolucion = devolucion;
 		this.funcionId = funcionId;
@@ -145,5 +150,13 @@ public class Silla
 
 	public void setLocalidadId(int localidadId) {
 		this.localidadId = localidadId;
-	}	
+	}
+
+	public int getAsistio() {
+		return asistio;
+	}
+
+	public void setAsistio(int asistio) {
+		this.asistio = asistio;
+	}		
 }

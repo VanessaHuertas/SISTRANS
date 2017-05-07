@@ -156,7 +156,7 @@ public class DAOTablaSitios
 			int precio = rs.getInt(7);
 			int disponible = Integer.parseInt(rs.getString(8));
 			funciones.add(new Funcion(0, idfun, sitioIdB, fechaRealizacion, espectaculoId, realizada));
-			sillas.add(new Silla(-1, sillaId, precio, 0, disponible, fechaRealizacion, idfun, localidadId));
+			sillas.add(new Silla(-1, sillaId, precio, 0, disponible,0, fechaRealizacion, idfun, localidadId));
 		}
 		
 		result.setFunciones(funciones);
