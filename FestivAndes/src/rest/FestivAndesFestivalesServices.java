@@ -149,6 +149,23 @@ public class FestivAndesFestivalesServices
 	}
 	
 	@POST
+	@Path("/cNAsistenciaFest")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response consultarNoAsistenciaFest(ConsultaAs consulta) 
+	{
+		FestivAndesMaster tm = new FestivAndesMaster(getPath());
+		Usuario response;
+		try 
+		{
+			response = tm.consultarNoAsistenciaFest(consulta);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(consulta).build();
+	}
+	
+	@POST
 	@Path("/funciones/{usuarioId}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })

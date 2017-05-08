@@ -205,4 +205,34 @@ public class DAOTablaUsuarios
 		}
 		return con;
 	}
+	
+	public Usuario consultarNoAsistenciaFest(ConsultaAs consulta) throws SQLException, Exception 
+	{
+		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+		Usuario con = null;
+		
+		String nombreCompanhia = consulta.getNombreCompanhia();
+		Date fechaInicio = consulta.getFechaInicio();
+		Date fechaFin = consulta.getFechaFin();
+
+		String sql = "SELECT u.IDUSUARIO, u.NOMBRE, u.EMAIL FROM USUARIOS u INNER JOIN SILLAS s ON s.USUARIOS_IDUSUARIO = u.IDUSUARIO "
+				+ "INNER JOIN FUNCIONES f ON f.IDFUNCION = s.FUNCIONES_IDFUNCION INNER JOIN ESPECTACULOS e ON e.NOMBRE = f.ESPECTACULOS_NOMBRE "
+				+ "INNER JOIN COMPANHIAS_ESPECTACULOS ce ON ce.ESPECTACULOS_NOMBRE = e.NOMBRE WHERE s.ASISTIO = '0' AND ce.COMPANHIAS_NOMBRE ='" + nombreCompanhia 
+				+ "' AND f.FECHAR BETWEEN " + fechaInicio + " AND " + fechaFin;
+		
+		System.out.println("SQL stmt:" + sql);
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		while (rs.next()) 
+		{
+			int usuId = rs.getInt("f.SITIOS_IDSITIO");
+			String nombUsu = rs.getString("f.IDFUNCION");
+			String emailUsu = rs.getString("f.FECHAR");
+			usuarios.add(new Usuario(usuId,nombUsu,emailUsu,-1,-1));
+		}
+		return con;
+	}
 }

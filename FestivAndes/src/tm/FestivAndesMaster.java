@@ -865,6 +865,39 @@ public class FestivAndesMaster
 		return response;
 	}
 	
+	public Usuario consultarNoAsistenciaFest(ConsultaAs consulta) throws Exception 
+	{
+		Usuario response;
+		DAOTablaUsuarios daoUsuarios = new DAOTablaUsuarios();
+		try
+		{
+			//Transacción
+			this.conn = darConexion();
+			daoUsuarios.setConn(conn);
+			response = daoUsuarios.consultarNoAsistenciaFest(consulta);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoUsuarios.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return response;
+	}
+	
 	/**
 	 * Mï¿½todo que modela la transacciï¿½n que retorna el/los espectaculos mï¿½s populares
 	 * @return ListaEspectaculos - objeto que modela  un arreglo de espectaculos. este arreglo contiene el resultado de la bÃºsqueda
