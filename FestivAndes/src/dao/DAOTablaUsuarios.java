@@ -235,4 +235,29 @@ public class DAOTablaUsuarios
 		}
 		return con;
 	}
+	
+	public ArrayList<Usuario> consultarBuenosClientes() throws SQLException, Exception 
+	{
+		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
+		Usuario con = null;
+		
+		String sql = "SELECT u.IDUSUARIO, u.NOMBRE, u.EMAIL FROM USUARIOS u INNER JOIN SILLAS S ON U.IDUSUARIO = S.USUARIOS_IDUSUARIO WHERE U.ROLES_IDROL = 2 "
+				+ "AND S.LOCALIDADES_IDLOCALIDAD = 51 UNION ALL "
+				+ "SELECT U.IDUSUARIO, U.NOMBRE, U.EMAIL FROM USUARIOS U RIGHT JOIN SILLAS ON U.IDUSUARIO = SILLAS.USUARIOS_IDUSUARIO WHERE U.ROLES_IDROL = 2";		
+
+		System.out.println("SQL stmt:" + sql);
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		while (rs.next()) 
+		{
+			int usuId = rs.getInt("u.IDUSUARIO");
+			String nombUsu = rs.getString("u.NOMBRE");
+			String emailUsu = rs.getString("u.EMAIL");
+			usuarios.add(new Usuario(usuId,nombUsu,emailUsu,-1,-1));
+		}
+		return usuarios;
+	}
 }

@@ -185,6 +185,23 @@ public class FestivAndesFestivalesServices
 	}
 	
 	@POST
+	@Path("/cBuenos")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response consultarBuenosClientes( ) 
+	{
+		FestivAndesMaster tm = new FestivAndesMaster(getPath());
+		ArrayList<Usuario> response;
+		try 
+		{
+			response = tm.consultarBuenosClientes();
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(response).build();
+	}
+	
+	@POST
 	@Path("/funciones/{usuarioId}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
