@@ -198,9 +198,9 @@ public class DAOTablaUsuarios
 
 		while (rs.next()) 
 		{
-			int usuId = rs.getInt("f.SITIOS_IDSITIO");
-			String nombUsu = rs.getString("f.IDFUNCION");
-			String emailUsu = rs.getString("f.FECHAR");
+			int usuId = rs.getInt("u.IDUSUARIO");
+			String nombUsu = rs.getString("u.NOMBRE");
+			String emailUsu = rs.getString("u.EMAIL");
 			usuarios.add(new Usuario(usuId,nombUsu,emailUsu,-1,-1));
 		}
 		return con;
@@ -228,9 +228,9 @@ public class DAOTablaUsuarios
 
 		while (rs.next()) 
 		{
-			int usuId = rs.getInt("f.SITIOS_IDSITIO");
-			String nombUsu = rs.getString("f.IDFUNCION");
-			String emailUsu = rs.getString("f.FECHAR");
+			int usuId = rs.getInt("u.IDUSUARIO");
+			String nombUsu = rs.getString("u.NOMBRE");
+			String emailUsu = rs.getString("u.EMAIL");
 			usuarios.add(new Usuario(usuId,nombUsu,emailUsu,-1,-1));
 		}
 		return con;

@@ -32,6 +32,7 @@ import vos.ConsultaFunciones;
 import vos.ConsultaSitios;
 import vos.Espectaculo;
 import vos.FestivAndes;
+import vos.Filtros;
 import vos.Funcion;
 import vos.PreferenciaCliente;
 import vos.ReporteEspectaculo;
@@ -163,6 +164,23 @@ public class FestivAndesFestivalesServices
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).entity(consulta).build();
+	}
+	
+	@POST
+	@Path("/cCompras")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response consultarComprasBoletas(Filtros filtros) 
+	{
+		FestivAndesMaster tm = new FestivAndesMaster(getPath());
+		Silla response;
+		try 
+		{
+			response = tm.consultarComprasBoletas(filtros);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(filtros).build();
 	}
 	
 	@POST
