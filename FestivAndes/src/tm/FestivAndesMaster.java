@@ -34,10 +34,12 @@ import vos.ConsultaFunciones;
 import vos.ConsultaSitios;
 import vos.Espectaculo;
 import vos.FestivAndes;
+import vos.Filtros;
 import vos.Funcion;
 import vos.PreferenciaCliente;
 import vos.ReporteEspectaculo;
 import vos.ReporteFuncion;
+import vos.Respuesta;
 import vos.Silla;
 import vos.Sitio;
 import vos.Usuario;
@@ -887,6 +889,39 @@ public class FestivAndesMaster
 		} finally {
 			try {
 				daoUsuarios.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return response;
+	}
+	
+	public Respuesta consultarComprasBoletas(Filtros filtros) throws Exception 
+	{
+		Respuesta response;
+		DAOTablaSillas daoSillas = new DAOTablaSillas();
+		try
+		{
+			//Transacción
+			this.conn = darConexion();
+			daoSillas.setConn(conn);
+			response = daoSillas.consultarComprasBoletas(filtros);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoSillas.cerrarRecursos();
 				if(this.conn!=null)
 					this.conn.close();
 			} catch (SQLException exception) {

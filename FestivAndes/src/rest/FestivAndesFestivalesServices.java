@@ -37,6 +37,7 @@ import vos.Funcion;
 import vos.PreferenciaCliente;
 import vos.ReporteEspectaculo;
 import vos.ReporteFuncion;
+import vos.Respuesta;
 import vos.Silla;
 import vos.Sitio;
 import vos.Usuario;
@@ -173,7 +174,7 @@ public class FestivAndesFestivalesServices
 	public Response consultarComprasBoletas(Filtros filtros) 
 	{
 		FestivAndesMaster tm = new FestivAndesMaster(getPath());
-		Silla response;
+		Respuesta response;
 		try 
 		{
 			response = tm.consultarComprasBoletas(filtros);

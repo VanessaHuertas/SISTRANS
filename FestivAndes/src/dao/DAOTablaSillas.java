@@ -15,10 +15,15 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
+import vos.ConsultaAs;
+import vos.Filtros;
 import vos.Funcion;
+import vos.Respuesta;
 import vos.Silla;
+import vos.Usuario;
 
 /**
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación
@@ -224,10 +229,49 @@ public class DAOTablaSillas
 				}
 			}
 		}
-	else
-	{
-		throw new Exception("Las funciones de espect�culos solo pueden ser canceladas por un administrador");
+		else
+		{
+			throw new Exception("Las funciones de espect�culos solo pueden ser canceladas por un administrador");
+		}
 	}
-}
+	
+	public Respuesta consultarComprasBoletas(Filtros filtros) throws SQLException, Exception 
+	{
+		ArrayList<Respuesta> respuesta = new ArrayList<Respuesta>();
+		Respuesta con = null;
+		
+		Date fechaInicio = filtros.getFechaInicio();
+		Date fechaFin = filtros.getFechaFin();
+		String elementos = filtros.getElementosEscenario();
+		String locali = filtros.getTipoLocalidad();
+		String hInicio = filtros.getHoraInicio();
+		String hFin = filtros.getHoraFin();
+		String dia = filtros.getDia();
 
+
+		String sql = "SELECT f.ESPECTACULOS_nombre, f.fechaR, SITIOS.NOMBRES, COUNT(*) AS boletas_vendidas, COUNT(s.USUARIOS_idUsuario) AS usuarios_registrados "
+				+ "FROM FUNCIONES f INNER JOIN SILLAS s ON f.IDFUNCION = s.FUNCIONES_IDFUNCION "
+				+ "INNER JOIN ESPECTACULOS e ON f.ESPECTACULOS_NOMBRE = e.NOMBRE "
+				+ "INNER JOIN LOCALIDADES l ON s.LOCALIDADES_IDLOCALIDAD = l.IDLOCALIDAD " 
+				+ "INNER JOIN SITIOS ON SITIOS.IDSITIO = f.SITIOS_IDSITIO " 
+				+ "WHERE s.DISPONIBLE = '0' "
+				+ "GROUP BY f.ESPECTACULOS_nombre, f.fechaR, SITIOS.NOMBRES";
+		
+		System.out.println("SQL stmt:" + sql);
+
+		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		recursos.add(prepStmt);
+		ResultSet rs = prepStmt.executeQuery();
+
+		while (rs.next()) 
+		{
+			String nombreE = rs.getString("f.ESPECTACULOS_nombre");
+			Date fecha = rs.getDate("f.fechaR");
+			String sitio = rs.getString("SITIOS.NOMBRES");
+			int vendidas = rs.getInt("boletas_vendidas");
+			int registrados = rs.getInt("usuarios_registrados");
+			respuesta.add(new Respuesta(nombreE,fecha,sitio,vendidas,registrados));
+		}
+		return con;
+	}
 }

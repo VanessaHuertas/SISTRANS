@@ -42,16 +42,10 @@ public class Respuesta
 	 */
 	@JsonProperty(value="boletasVendidas")
 	private int boletasVendidas;
-	
-	@JsonProperty(value="usuariosRegistrados")
-	private String usuariosRegistrados;
 
-	@JsonProperty(value="horaFin")
-	private String horaFin;
-	
-	@JsonProperty(value="dia")
-	private String dia;
-	
+	@JsonProperty(value="usuariosRegistrados")
+	private int usuariosRegistrados;
+
 	/**
 	 * Método constructor de la clase banco
 	 * <b>post: </b> Crea el banco con los valores que entran como parámetro
@@ -60,75 +54,57 @@ public class Respuesta
 	 * @param saldoCuenta - Saldo en la cuenta
 	 * @param idFestival - Identificador del festival 
 	 */
-	public Respuesta(@JsonProperty(value="fechaInicio")Date fechaInicio,@JsonProperty(value="fechaFin") Date fechaFin, 
-			@JsonProperty(value="elementosEscenario") String elementosEscenario, @JsonProperty(value="tipoLocalidad") String tipoLocalidad, 
-			@JsonProperty(value="horaInicio") String horaInicio, @JsonProperty(value="horaFin") String horaFin, @JsonProperty(value="dia") String dia) 
+	public Respuesta(@JsonProperty(value="nombreEspectaculo")String nombreEspectaculo,@JsonProperty(value="fechaFuncion") Date fechaFuncion, 
+			@JsonProperty(value="sitioFuncion") String sitioFuncion, @JsonProperty(value="boletasVendidas") int boletasVendidas, 
+			@JsonProperty(value="usuariosRegistrados") int usuariosRegistrados) 
 	{
 		super();
-		this.fechaInicio = fechaInicio;
-		this.fechaFin = fechaFin;
-		this.elementosEscenario = elementosEscenario;
-		this.tipoLocalidad = tipoLocalidad;
-		this.horaInicio = horaInicio;
-		this.horaFin = horaFin;
-		this.dia = dia;
+		this.nombreEspectaculo = nombreEspectaculo;
+		this.fechaFuncion = fechaFuncion;
+		this.sitioFuncion = sitioFuncion;
+		this.boletasVendidas = boletasVendidas;
+		this.usuariosRegistrados = usuariosRegistrados;
 	}
 	
 	//Getters y setters
 
-	public Date getFechaInicio() {
-		return fechaInicio;
+	public String getNombreEspectaculo() {
+		return nombreEspectaculo;
 	}
 
-	public void setFechaInicio(Date fechaInicio) {
-		this.fechaInicio = fechaInicio;
+	public void setNombreEspectaculo(String nombreEspectaculo) {
+		this.nombreEspectaculo = nombreEspectaculo;
 	}
 
-	public Date getFechaFin() {
-		return fechaFin;
+	public Date getFechaFuncion() {
+		return fechaFuncion;
 	}
 
-	public void setFechaFin(Date fechaFin) {
-		this.fechaFin = fechaFin;
+	public void setFechaFuncion(Date fechaFuncion) {
+		this.fechaFuncion = fechaFuncion;
 	}
 
-	public String getElementosEscenario() {
-		return elementosEscenario;
+	public String getSitioFuncion() {
+		return sitioFuncion;
 	}
 
-	public void setElementosEscenario(String elementosEscenario) {
-		this.elementosEscenario = elementosEscenario;
+	public void setSitioFuncion(String sitioFuncion) {
+		this.sitioFuncion = sitioFuncion;
 	}
 
-	public String getTipoLocalidad() {
-		return tipoLocalidad;
+	public int getBoletasVendidas() {
+		return boletasVendidas;
 	}
 
-	public void setTipoLocalidad(String tipoLocalidad) {
-		this.tipoLocalidad = tipoLocalidad;
+	public void setBoletasVendidas(int boletasVendidas) {
+		this.boletasVendidas = boletasVendidas;
 	}
 
-	public String getHoraInicio() {
-		return horaInicio;
+	public int getUsuariosRegistrados() {
+		return usuariosRegistrados;
 	}
 
-	public void setHoraInicio(String horaInicio) {
-		this.horaInicio = horaInicio;
-	}
-
-	public String getHoraFin() {
-		return horaFin;
-	}
-
-	public void setHoraFin(String horaFin) {
-		this.horaFin = horaFin;
-	}
-
-	public String getDia() {
-		return dia;
-	}
-
-	public void setDia(String dia) {
-		this.dia = dia;
+	public void setUsuariosRegistrados(int usuariosRegistrados) {
+		this.usuariosRegistrados = usuariosRegistrados;
 	}	
 }
