@@ -28,6 +28,7 @@ import dao.DAOTablaSillas;
 import dao.DAOTablaSitios;
 import dao.DAOTablaUsuarios;
 import vos.Compannia;
+import vos.ConsultaAs;
 import vos.ConsultaCompannias;
 import vos.ConsultaFunciones;
 import vos.ConsultaSitios;
@@ -820,6 +821,39 @@ public class FestivAndesMaster
 		} finally {
 			try {
 				daoCompannias.cerrarRecursos();
+				if(this.conn!=null)
+					this.conn.close();
+			} catch (SQLException exception) {
+				System.err.println("SQLException closing resources:" + exception.getMessage());
+				exception.printStackTrace();
+				throw exception;
+			}
+		}
+		return response;
+	}
+	
+	public Usuario consultarAsistenciaFest(ConsultaAs consulta) throws Exception 
+	{
+		Usuario response;
+		DAOTablaUsuarios daoUsuarios = new DAOTablaUsuarios();
+		try
+		{
+			//Transacción
+			this.conn = darConexion();
+			daoUsuarios.setConn(conn);
+			response = daoUsuarios.consultarAsistenciaFest(consulta);
+
+		} catch (SQLException e) {
+			System.err.println("SQLException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} catch (Exception e) {
+			System.err.println("GeneralException:" + e.getMessage());
+			e.printStackTrace();
+			throw e;
+		} finally {
+			try {
+				daoUsuarios.cerrarRecursos();
 				if(this.conn!=null)
 					this.conn.close();
 			} catch (SQLException exception) {

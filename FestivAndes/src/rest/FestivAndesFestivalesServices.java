@@ -27,6 +27,7 @@ import javax.ws.rs.core.Response;
 
 import tm.FestivAndesMaster;
 import vos.Compannia;
+import vos.ConsultaAs;
 import vos.ConsultaFunciones;
 import vos.ConsultaSitios;
 import vos.Espectaculo;
@@ -128,6 +129,23 @@ public class FestivAndesFestivalesServices
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
 		return Response.status(200).entity(response).build();
+	}
+	
+	@POST
+	@Path("/cAsistenciaFest")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces({ MediaType.APPLICATION_JSON })
+	public Response consultarAsistenciaFest(ConsultaAs consulta) 
+	{
+		FestivAndesMaster tm = new FestivAndesMaster(getPath());
+		Usuario response;
+		try 
+		{
+			response = tm.consultarAsistenciaFest(consulta);
+		} catch (Exception e) {
+			return Response.status(500).entity(doErrorMessage(e)).build();
+		}
+		return Response.status(200).entity(consulta).build();
 	}
 	
 	@POST

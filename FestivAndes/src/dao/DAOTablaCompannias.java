@@ -15,12 +15,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import vos.Compannia;
 import vos.ConsultaCompannias;
-import vos.ConsultaFunciones;
-import vos.Funcion;
 
 /**
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación
