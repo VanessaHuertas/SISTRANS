@@ -834,9 +834,9 @@ public class FestivAndesMaster
 		return response;
 	}
 	
-	public Usuario consultarAsistenciaFest(ConsultaAs consulta) throws Exception 
+	public ArrayList<Usuario> consultarAsistenciaFest(ConsultaAs consulta) throws Exception 
 	{
-		Usuario response;
+		ArrayList<Usuario> response;
 		DAOTablaUsuarios daoUsuarios = new DAOTablaUsuarios();
 		try
 		{
@@ -867,9 +867,9 @@ public class FestivAndesMaster
 		return response;
 	}
 	
-	public Usuario consultarNoAsistenciaFest(ConsultaAs consulta) throws Exception 
+	public ArrayList<Usuario> consultarNoAsistenciaFest(ConsultaAs consulta) throws Exception 
 	{
-		Usuario response;
+		ArrayList<Usuario> response;
 		DAOTablaUsuarios daoUsuarios = new DAOTablaUsuarios();
 		try
 		{

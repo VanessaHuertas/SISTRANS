@@ -10,14 +10,17 @@
 package dao;
 
 
-import java.sql.Connection; 
+import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 
-import vos.*;
+import vos.ConsultaAs;
+import vos.Usuario;
 
 /**
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación
@@ -176,24 +179,29 @@ public class DAOTablaUsuarios
 		}
 	}
 	
-	public Usuario consultarAsistenciaFest(ConsultaAs consulta) throws SQLException, Exception 
+	public ArrayList<Usuario> consultarAsistenciaFest(ConsultaAs consulta) throws SQLException, Exception 
 	{
 		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 		Usuario con = null;
 		
 		String nombreCompanhia = consulta.getNombreCompanhia();
-		Date fechaInicio = consulta.getFechaInicio();
-		Date fechaFin = consulta.getFechaFin();
-
+		DateFormat formato = new SimpleDateFormat("yyyy-MM-dd");
+		String fechaInici = consulta.getFechaInicio();
+		Date fechaInicio = new Date(formato.parse(fechaInici).getTime());
+		String fechaFi = consulta.getFechaFin();
+		Date fechaFin =  new Date(formato.parse(fechaFi).getTime());
+		
 		String sql = "SELECT u.IDUSUARIO, u.NOMBRE, u.EMAIL FROM USUARIOS u INNER JOIN SILLAS s ON s.USUARIOS_IDUSUARIO = u.IDUSUARIO "
 				+ "INNER JOIN FUNCIONES f ON f.IDFUNCION = s.FUNCIONES_IDFUNCION INNER JOIN ESPECTACULOS e ON e.NOMBRE = f.ESPECTACULOS_NOMBRE "
 				+ "INNER JOIN COMPANHIAS_ESPECTACULOS ce ON ce.ESPECTACULOS_NOMBRE = e.NOMBRE WHERE s.ASISTIO = '1' AND ce.COMPANHIAS_NOMBRE ='" + nombreCompanhia 
-				+ "' AND f.FECHAR BETWEEN " + fechaInicio + " AND " + fechaFin;
+				+ "' AND f.FECHAR BETWEEN ? AND ?";
 		
 		System.out.println("SQL stmt:" + sql);
 
 		PreparedStatement prepStmt = conn.prepareStatement(sql);
 		recursos.add(prepStmt);
+		prepStmt.setDate(1, fechaInicio);
+		prepStmt.setDate(2, fechaFin);
 		ResultSet rs = prepStmt.executeQuery();
 
 		while (rs.next()) 
@@ -203,17 +211,21 @@ public class DAOTablaUsuarios
 			String emailUsu = rs.getString("u.EMAIL");
 			usuarios.add(new Usuario(usuId,nombUsu,emailUsu,-1,-1));
 		}
-		return con;
+		return usuarios;
 	}
 	
-	public Usuario consultarNoAsistenciaFest(ConsultaAs consulta) throws SQLException, Exception 
+	public ArrayList<Usuario> consultarNoAsistenciaFest(ConsultaAs consulta) throws SQLException, Exception 
 	{
 		ArrayList<Usuario> usuarios = new ArrayList<Usuario>();
 		Usuario con = null;
 		
+
+		DateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
 		String nombreCompanhia = consulta.getNombreCompanhia();
-		Date fechaInicio = consulta.getFechaInicio();
-		Date fechaFin = consulta.getFechaFin();
+		String fechaInici = consulta.getFechaInicio();
+		Date fechaInicio = new Date(formato.parse(fechaInici).getTime());
+		String fechaFi = consulta.getFechaFin();
+		Date fechaFin =  new Date(formato.parse(fechaFi).getTime());
 
 		String sql = "SELECT u.IDUSUARIO, u.NOMBRE, u.EMAIL FROM USUARIOS u INNER JOIN SILLAS s ON s.USUARIOS_IDUSUARIO = u.IDUSUARIO "
 				+ "INNER JOIN FUNCIONES f ON f.IDFUNCION = s.FUNCIONES_IDFUNCION INNER JOIN ESPECTACULOS e ON e.NOMBRE = f.ESPECTACULOS_NOMBRE "
@@ -233,7 +245,7 @@ public class DAOTablaUsuarios
 			String emailUsu = rs.getString("u.EMAIL");
 			usuarios.add(new Usuario(usuId,nombUsu,emailUsu,-1,-1));
 		}
-		return con;
+		return usuarios;
 	}
 	
 	public ArrayList<Usuario> consultarBuenosClientes(int numBoletas) throws SQLException, Exception 

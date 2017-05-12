@@ -140,14 +140,14 @@ public class FestivAndesFestivalesServices
 	public Response consultarAsistenciaFest(ConsultaAs consulta) 
 	{
 		FestivAndesMaster tm = new FestivAndesMaster(getPath());
-		Usuario response;
+		ArrayList<Usuario> response;
 		try 
 		{
 			response = tm.consultarAsistenciaFest(consulta);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(consulta).build();
+		return Response.status(200).entity(response).build();
 	}
 	
 	@POST
@@ -157,14 +157,14 @@ public class FestivAndesFestivalesServices
 	public Response consultarNoAsistenciaFest(ConsultaAs consulta) 
 	{
 		FestivAndesMaster tm = new FestivAndesMaster(getPath());
-		Usuario response;
+		ArrayList<Usuario> response;
 		try 
 		{
 			response = tm.consultarNoAsistenciaFest(consulta);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
-		return Response.status(200).entity(consulta).build();
+		return Response.status(200).entity(response).build();
 	}
 	
 	@POST

@@ -8,9 +8,7 @@
  */
 package vos;
 
-import java.util.Date;
-
-import org.codehaus.jackson.annotate.*;
+import org.codehaus.jackson.annotate.JsonProperty;
 
 /**
  * Clase que representa una Banco
@@ -29,13 +27,13 @@ public class ConsultaAs
 	 * Fecha inicio
 	 */
 	@JsonProperty(value="fechaInicio")
-	private Date fechaInicio;
+	private String fechaInicio;
 
 	/**
 	 * Fecha fin
 	 */
 	@JsonProperty(value="fechaFin")
-	private Date fechaFin;
+	private String fechaFin;
 
 	/**
 	 * Método constructor de la clase banco
@@ -44,7 +42,7 @@ public class ConsultaAs
 	 * @param fechaInicio- Número de la cuenta
 	 * @param fechaFin - Saldo en la cuenta
 	 */
-	public ConsultaAs(@JsonProperty(value="nombreCompanhia") String nombreCompanhia,@JsonProperty(value="fechaInicio") Date fechaInicio, @JsonProperty(value="fechaFin") Date fechaFin) 
+	public ConsultaAs(@JsonProperty(value="nombreCompanhia") String nombreCompanhia,@JsonProperty(value="fechaInicio") String fechaInicio, @JsonProperty(value="fechaFin") String fechaFin) 
 	{
 		super();
 		this.nombreCompanhia = nombreCompanhia;
@@ -62,19 +60,19 @@ public class ConsultaAs
 		this.nombreCompanhia = nombreCompanhia;
 	}
 
-	public Date getFechaInicio() {
+	public String getFechaInicio() {
 		return fechaInicio;
 	}
 
-	public void setFechaInicio(Date fechaInicio) {
+	public void setFechaInicio(String fechaInicio) {
 		this.fechaInicio = fechaInicio;
 	}
 
-	public Date getFechaFin() {
+	public String getFechaFin() {
 		return fechaFin;
 	}
 
-	public void setFechaFin(Date fechaFin) {
+	public void setFechaFin(String fechaFin) {
 		this.fechaFin = fechaFin;
 	}	
 }
