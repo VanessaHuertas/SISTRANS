@@ -19,12 +19,10 @@ import java.util.Date;
 import java.util.List;
 import java.util.Objects;
 
-import vos.ConsultaAs;
 import vos.Filtros;
 import vos.Funcion;
 import vos.Respuesta;
 import vos.Silla;
-import vos.Usuario;
 
 /**
  * Clase DAO que se conecta la base de datos usando JDBC para resolver los requerimientos de la aplicación
@@ -256,13 +254,14 @@ public class DAOTablaSillas
 				+ "INNER JOIN LOCALIDADES l ON s.LOCALIDADES_IDLOCALIDAD = l.IDLOCALIDAD " 
 				+ "INNER JOIN SITIOS ON SITIOS.IDSITIO = f.SITIOS_IDSITIO " 
 				+ "WHERE s.DISPONIBLE = '0' ");
-		sql.append((Objects.nonNull(fechaInicio)) ? " AND f.FECHAR >= " + fechaInicio : "");
-		sql.append((Objects.nonNull(fechaFin)) ? " AND f.FECHAR <= " + fechaFin : "");
-		sql.append((Objects.nonNull(elementos)) ? " AND e.REQUERIMIENTOS LIKE %" + elementos + "%" : "");
-		sql.append((Objects.nonNull(locali)) ? " AND l.DESCRIPCION LIKE %" + locali + "%" : "");
-		sql.append((Objects.nonNull(hInicio)) ? " AND TO_CHAR(f.FECHAR, 'HH24:MI:SS') >= " + hInicio : "");
-		sql.append((Objects.nonNull(hFin)) ? " AND TO_CHAR(f.FECHAR, 'HH24:MI:SS') <= " + hFin : "");
-		sql.append((Objects.nonNull(dia)) ? " AND TO_CHAR(TO_DATE('f.FECHAR','dd/mm/yyyy'), 'DAY') = " + dia.toUpperCase() : "");
+		
+		sql.append((Objects.nonNull(fechaInicio)) ? " AND f.FECHAR >= '" + fechaInicio + "'" : "");
+		sql.append((Objects.nonNull(fechaFin)) ? " AND f.FECHAR <= '" + fechaFin + "'" : "");
+		sql.append((Objects.nonNull(elementos)) ? " AND e.REQUERIMIENTOS LIKE '%" + elementos + "%'" : "");
+		sql.append((Objects.nonNull(locali)) ? " AND l.DESCRIPCION LIKE '%" + locali + "%'" : "");
+		sql.append((Objects.nonNull(hInicio)) ? " AND TO_CHAR(f.FECHAR, 'HH24:MI:SS') >= '" + hInicio + "'" : "");
+		sql.append((Objects.nonNull(hFin)) ? " AND TO_CHAR(f.FECHAR, 'HH24:MI:SS') <= '" + hFin + "'" : "");
+		sql.append((Objects.nonNull(dia)) ? " AND TO_CHAR(TO_DATE('f.FECHAR','dd/mm/yyyy'), 'DAY') = '" + dia.toUpperCase() + "'" : "");
 		
 		sql.append(" GROUP BY f.ESPECTACULOS_nombre, f.fechaR, SITIOS.NOMBRES");
 		System.out.println("SQL stmt:" + sql);
