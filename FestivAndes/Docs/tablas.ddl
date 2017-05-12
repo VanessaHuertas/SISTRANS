@@ -4,8 +4,6 @@
 --   tipo:      Oracle Database 11g
 
 
-
-
 CREATE TABLE BANCOS
   (
     idBanco                NUMBER NOT NULL ,
@@ -226,7 +224,6 @@ IS
   'Nombre del rol del usuario' ;
 ALTER TABLE ROLES ADD CONSTRAINT ROLES_PK PRIMARY KEY ( idRol ) ;
 
-
 CREATE TABLE SILLAS
   (
     idSilla                 NUMBER NOT NULL ,
@@ -234,6 +231,7 @@ CREATE TABLE SILLAS
     disponible              CHAR (1) NOT NULL ,
     fechaR                  DATE NOT NULL ,
     devolucion              CHAR (1) NOT NULL ,
+    asistio              CHAR (1) NOT NULL ,
     FUNCIONES_idFuncion     NUMBER NOT NULL ,
     USUARIOS_idUsuario      NUMBER NOT NULL ,
     LOCALIDADES_idLocalidad NUMBER NOT NULL
@@ -256,6 +254,9 @@ IS
   COMMENT ON COLUMN SILLAS.devolucion
 IS
   '1 si se va a hacer devolución de la boleta, 0 en caso de que se encuentre disponible o haya sido comprada por un cliente.' ;
+    COMMENT ON COLUMN SILLAS.asistio
+IS
+  '1 si el cliente asistiova a la función, 0 en caso de que se encuentre disponible o haya sido comprada por un cliente.' ;
 ALTER TABLE SILLAS ADD CONSTRAINT SILLAS_PK PRIMARY KEY ( idSilla ) ;
 
 

@@ -185,16 +185,16 @@ public class FestivAndesFestivalesServices
 	}
 	
 	@POST
-	@Path("/cBuenos")
+	@Path("/cBuenos/{numBoletas}")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces({ MediaType.APPLICATION_JSON })
-	public Response consultarBuenosClientes( ) 
+	public Response consultarBuenosClientes(@javax.ws.rs.PathParam("numBoletas") int numBoletas ) 
 	{
 		FestivAndesMaster tm = new FestivAndesMaster(getPath());
 		ArrayList<Usuario> response;
 		try 
 		{
-			response = tm.consultarBuenosClientes();
+			response = tm.consultarBuenosClientes(numBoletas);
 		} catch (Exception e) {
 			return Response.status(500).entity(doErrorMessage(e)).build();
 		}
