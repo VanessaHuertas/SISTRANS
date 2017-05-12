@@ -933,7 +933,7 @@ public class FestivAndesMaster
 		return response;
 	}
 	
-	public ArrayList<Usuario> consultarBuenosClientes() throws Exception 
+	public ArrayList<Usuario> consultarBuenosClientes(int numBoletas) throws Exception 
 	{
 		ArrayList<Usuario> response;
 		DAOTablaUsuarios daoUsuarios = new DAOTablaUsuarios();
@@ -942,7 +942,7 @@ public class FestivAndesMaster
 			//Transacción
 			this.conn = darConexion();
 			daoUsuarios.setConn(conn);
-			response = daoUsuarios.consultarBuenosClientes();
+			response = daoUsuarios.consultarBuenosClientes(numBoletas);
 
 		} catch (SQLException e) {
 			System.err.println("SQLException:" + e.getMessage());
