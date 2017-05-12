@@ -17,6 +17,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Objects;
 
 import vos.ConsultaAs;
 import vos.Filtros;
@@ -249,17 +250,24 @@ public class DAOTablaSillas
 		String dia = filtros.getDia();
 
 
-		String sql = "SELECT f.ESPECTACULOS_nombre, f.fechaR, SITIOS.NOMBRES, COUNT(*) AS boletas_vendidas, COUNT(s.USUARIOS_idUsuario) AS usuarios_registrados "
+		StringBuilder sql = new StringBuilder("SELECT f.ESPECTACULOS_nombre, f.fechaR, SITIOS.NOMBRES, COUNT(*) AS boletas_vendidas, COUNT(s.USUARIOS_idUsuario) AS usuarios_registrados "
 				+ "FROM FUNCIONES f INNER JOIN SILLAS s ON f.IDFUNCION = s.FUNCIONES_IDFUNCION "
 				+ "INNER JOIN ESPECTACULOS e ON f.ESPECTACULOS_NOMBRE = e.NOMBRE "
 				+ "INNER JOIN LOCALIDADES l ON s.LOCALIDADES_IDLOCALIDAD = l.IDLOCALIDAD " 
 				+ "INNER JOIN SITIOS ON SITIOS.IDSITIO = f.SITIOS_IDSITIO " 
-				+ "WHERE s.DISPONIBLE = '0' "
-				+ "GROUP BY f.ESPECTACULOS_nombre, f.fechaR, SITIOS.NOMBRES";
+				+ "WHERE s.DISPONIBLE = '0' ");
+		sql.append((Objects.nonNull(fechaInicio)) ? " AND f.FECHAR >= " + fechaInicio : "");
+		sql.append((Objects.nonNull(fechaFin)) ? " AND f.FECHAR <= " + fechaFin : "");
+		sql.append((Objects.nonNull(elementos)) ? " AND e.REQUERIMIENTOS LIKE %" + elementos + "%" : "");
+		sql.append((Objects.nonNull(locali)) ? " AND l.DESCRIPCION LIKE %" + locali + "%" : "");
+		sql.append((Objects.nonNull(hInicio)) ? " AND TO_CHAR(f.FECHAR, 'HH24:MI:SS') >= " + hInicio : "");
+		sql.append((Objects.nonNull(hFin)) ? " AND TO_CHAR(f.FECHAR, 'HH24:MI:SS') <= " + hFin : "");
+		sql.append((Objects.nonNull(dia)) ? " AND TO_CHAR(TO_DATE('f.FECHAR','dd/mm/yyyy'), 'DAY') = " + dia.toUpperCase() : "");
 		
+		sql.append(" GROUP BY f.ESPECTACULOS_nombre, f.fechaR, SITIOS.NOMBRES");
 		System.out.println("SQL stmt:" + sql);
 
-		PreparedStatement prepStmt = conn.prepareStatement(sql);
+		PreparedStatement prepStmt = conn.prepareStatement(sql.toString());
 		recursos.add(prepStmt);
 		ResultSet rs = prepStmt.executeQuery();
 
